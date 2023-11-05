@@ -22,38 +22,11 @@ def guess_is_valid(guessed_letters):
             return True
 
 
-
-
-
-generate_color_code()
-
-#print(secret_code)
-
-print(f"""
-Welcome to Mastermind. Try to guess the 4-color secret code 
-generated from these colors: {available_colors}
-You will have 10 tries to guess it. Good luck!
-""")
-
-
-game_on = True
-current_turn = 1
-
-while game_on:
-
-    correct_position = 0
-    incorrect_position = 0
-    copy_secret = copy.deepcopy(secret_code)
-    to_remove = []
-
-    guess = input(f"#{current_turn}. Guess a code: ")
-    
-    guessed_letters = guess.split(" ")
-
-    if not guess_is_valid(guessed_letters):
-        continue
+def check_answer():
     
     i = 0
+    correct_position = 0
+    incorrect_position = 0
 
     for letter in guessed_letters:
         #print(f"Does {letter} match with {copy_secret[i]}?")
@@ -67,16 +40,49 @@ while game_on:
         guessed_letters.remove(letter)
         copy_secret.remove(letter)
    
-
     for letter in guessed_letters:
         if letter in copy_secret:
             incorrect_position += 1
             copy_secret.remove(letter)
-        
-
-    print(f"Correct: {correct_position} || Incorrect: {incorrect_position}")
     
-    if correct_position == 4:
+    results = {
+        "correct position" : correct_position,
+        "incorrect position" : incorrect_position
+    }
+
+    return results
+
+
+generate_color_code()
+
+print(secret_code)
+
+print(f"""
+Welcome to Mastermind. Try to guess the 4-color secret code 
+generated from these colors: {available_colors}
+You will have 10 tries to guess it. Good luck!
+""")
+
+game_on = True
+current_turn = 1
+
+while game_on:
+
+    copy_secret = copy.deepcopy(secret_code)
+    to_remove = []
+
+    guess = input(f"#{current_turn}. Guess a code: ")
+    
+    guessed_letters = guess.split(" ")
+
+    if not guess_is_valid(guessed_letters):
+        continue
+    
+    results = check_answer()
+        
+    print(f"Correct: {results['correct position']} || Incorrect: {results['incorrect position']}")
+    
+    if results['correct position'] == 4:
         print(f"You win! You guessed it in {current_turn} tries.")
         game_on = False
         break
@@ -86,43 +92,4 @@ while game_on:
     if current_turn > 10:
         print(f"Sorry, you lose. The secret code was: {secret_code}")
         game_on = False
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-
-
-
-
-# for letter in guessed_letters:
-    #     if letter == color_code[i]:
-    #         correct_position += 1
-    #         matched.append(letter)
-    #     i += 1
-
-    # for matched_letter in matched:
-    #     color_code.remove(matched_letter)
-    #     guessed_letters.remove(matched_letter)
-    
-    # for guess in guessed_letters:
-    #     if guess in color_code:
-    #         incorrect_position += 1
-    #         color_code.remove(guess)
-
-
-            # available_spots.remove(letter)
-            
-
-                # if guessed_letters.count(letter) > color_code.count(letter):
-                #     if color_code.count(letter) == 1:
-                #         incorrect_position -= 2
-                #     else:
-                #         incorrect_position -= 1
-            # else:
-            #     not_in += 1
-
-    
 
