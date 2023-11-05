@@ -4,6 +4,6 @@ A Python-programmed version of the game Mastermind. Players attempt to guess a s
 
 # Notes
 
-The most challenging part of this project by far was figuring out what to do when a guessed letter was in the incorrect position. I tried several (unsuccessful) approaches: comparing the number of correct and incorrect positions, comparing how many of a letter was in the guess vs. in the secret code.
+The most challenging part of this project by far was figuring out what to do when a guessed letter was in the incorrect position. I tried several (unsuccessful) approaches: comparing the number of correct and incorrect positions, comparing how many of a letter was in the guess vs. in the secret code, etc.
 
 The key was when I stepped back and realized that I had been checking for correct and incorrect positions simultaneously (by stacking if/elif/else statements), when I could have been trying to do these two tasks separately. This led me to try finding the number of matches (correct position) first, creating a list of those matches, then using that list to remove letters from the guess and a copy of the secret code. Now that matches have been accounted for, I could then just check to see if each guessed letter was in the secret code.
